@@ -31,6 +31,7 @@ func (t *Trie) Search(prefix string) []string {
 	return currentNode.GetWords(prefix)
 }
 
+// Vergeblicher Versuch einer rekursiven Lösung (contains) was aber mit der Datenstuktur nicht funktioniert
 func (t *Trie) Search2(prefix string) []string {
 	currentNode := t.root
 	result := []string{}
