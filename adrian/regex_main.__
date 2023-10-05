@@ -1,0 +1,51 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"regexp"
+	"time"
+)
+
+func main() {
+	fmt.Println("Lade Liste")
+
+	
+	file, err := os.Open("wortliste.txt")
+	if err != nil {
+		fmt.Println("Fehler beim Öffnen der Datei:", err)
+		return
+	}
+	defer file.Close()
+
+	
+	searchTerm := "Apfel"
+	regex := regexp.MustCompile(`(?i)` + searchTerm) 
+
+	matches := make([]string, 0)
+
+	scanner := bufio.NewScanner(file)
+	start := time.Now()
+	for scanner.Scan() {
+		word := scanner.Text()
+		if regex.MatchString(word) {
+			matches = append(matches, word)
+		}
+	}
+	elapsed := time.Since(start)
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Fehler beim Lesen der Datei:", err)
+		return
+	}
+
+	fmt.Printf("Wörter, die '%s' enthalten:\n", searchTerm)
+	
+		fmt.Println(matches)
+	
+
+
+	
+	fmt.Printf("Zeit für die Suche: %s\n", elapsed)
+}
