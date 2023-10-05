@@ -53,7 +53,7 @@ func (t *Trie) Search2(prefix string) []string {
 		currentNode = currentNode.children[char]
 	}
 
-	dfs(currentNode, prefix) // Starten Sie die DFS-Suche ab dem aktuellen Knoten
+	dfs(currentNode, prefix) // Starten der DFS-Suche ab dem aktuellen Knoten
 
 	return result
 }
