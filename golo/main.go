@@ -32,10 +32,10 @@ func main() {
 	}
 	fmt.Println("Liste geladen")
 	start := time.Now()
-	result := t.Search("Apfel")
+	result := t.Search("Text")
 	end := time.Now()
 	fmt.Println(result)
 	elapsed := end.Sub(start)
-	fmt.Printf("Zeit für die Suche: %s\n", elapsed)
+	fmt.Println("Zeit für die Suche:", elapsed, "Elemente gefunden:", len(result))
 
 }

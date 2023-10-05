@@ -30,3 +30,29 @@ func (t *Trie) Search(prefix string) []string {
 	}
 	return currentNode.GetWords(prefix)
 }
+
+func (t *Trie) Search2(prefix string) []string {
+	currentNode := t.root
+	result := []string{}
+
+	var dfs func(node *Node, word string)
+	dfs = func(node *Node, word string) {
+		if node.isEndOfWord {
+			result = append(result, word)
+		}
+		for char, child := range node.children {
+			dfs(child, word+string(char))
+		}
+	}
+
+	for _, char := range prefix {
+		if _, ok := currentNode.children[char]; !ok {
+			return result
+		}
+		currentNode = currentNode.children[char]
+	}
+
+	dfs(currentNode, prefix) // Starten Sie die DFS-Suche ab dem aktuellen Knoten
+
+	return result
+}
