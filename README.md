@@ -1,9 +1,13 @@
 # search_test
 
-Golo Suche
-![Alt text](image.png)
+```
 
-Adrian Suche
-![Alt text](image-1.png)
+Suche in 240 000 Wörtern nach "Text"
+----------
+Go 2.21.2 		Präfix-Trie: 	109.79µs
+Python 3.11.5 	Präfix-Trie: 	138.76µs
+-----------------
+Go 1.21.2 		Binäre Suche: 	10.458µs 
 
-Aus der Wortliste die Suche nach "Apfel"
+Hardware: Apple M2
+```
