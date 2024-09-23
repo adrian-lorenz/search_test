@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 public class Trie
 {
@@ -47,25 +45,23 @@ public class Trie
         {
             if (!currentNode.Children.ContainsKey(letter))
             {
-                return new List<string>(); // Präfix existiert nicht
+                return new List<string>(); // Wenn das Präfix nicht existiert
             }
             currentNode = currentNode.Children[letter];
         }
-        return GetWordsFromNode(currentNode, new StringBuilder(prefix));
+        return GetWordsFromNode(currentNode, prefix);
     }
 
-    private List<string> GetWordsFromNode(TrieNode node, StringBuilder prefix)
+    private List<string> GetWordsFromNode(TrieNode node, string prefix)
     {
         var results = new List<string>();
         if (node.IsEndOfWord)
         {
-            results.Add(prefix.ToString());
+            results.Add(prefix);
         }
         foreach (var child in node.Children)
         {
-            prefix.Append(child.Key);
-            results.AddRange(GetWordsFromNode(child.Value, prefix));
-            prefix.Length--; // String zurücksetzen
+            results.AddRange(GetWordsFromNode(child.Value, prefix + child.Key));
         }
         return results;
     }
@@ -82,15 +78,15 @@ class Program
         try
         {
             stopwatch.Start();
-
-            // Lade die Datei parallel
-            var lines = File.ReadAllLines("wortliste.txt");
-            Parallel.ForEach(lines, line =>
+            using (var file = new StreamReader("wortliste.txt"))
             {
-                var word = line.Trim();
-                trie.Add(word);
-            });
-
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    var word = line.Trim();
+                    trie.Add(word);
+                }
+            }
             stopwatch.Stop();
             Console.WriteLine("Liste geladen");
             var loadTime = stopwatch.Elapsed.TotalMilliseconds;
@@ -99,13 +95,13 @@ class Program
             stopwatch.Restart();
             var result = trie.Search("Text");
             stopwatch.Stop();
-            var searchTime = stopwatch.Elapsed.TotalMilliseconds;
+            var searchTime = stopwatch.Elapsed.TotalMicroseconds;
 
             // Gesamtlaufzeit
             var totalTime = loadTime + searchTime;
 
             Console.WriteLine($"Zeit für das Laden: {loadTime} Millisekunden");
-            Console.WriteLine($"Zeit für die Suche: {searchTime} Millisekunden");
+            Console.WriteLine($"Zeit für die Suche: {searchTime} Nano Sekunden");
             Console.WriteLine($"Zeit für Alles: {totalTime} Millisekunden - Elemente gefunden: {result.Count}");
         }
         catch (FileNotFoundException e)
