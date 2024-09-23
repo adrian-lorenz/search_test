@@ -8,6 +8,7 @@
 |Python|723ms|140µs|
 |C++|868ms|188µs|
 |C#|897ms|426µs|
+|Nodejs|167ms|218µs|
 
 Go
 ![alt text](image-2.png)
@@ -20,3 +21,6 @@ C++
 
 C#
 ![alt text](image-4.png)
+
+Node.js
+![alt text](image-6.png)
