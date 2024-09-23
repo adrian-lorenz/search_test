@@ -10,6 +10,10 @@
 |C#|897ms|426µs|
 |Nodejs|167ms|218µs|
 
+**Hardware:**
+
+![alt text](image-7.png)
+
 Go
 ![alt text](image-2.png)
 
